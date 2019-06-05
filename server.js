@@ -1,8 +1,17 @@
 const express = require("express");
+const connectToDB = require("./config/db");
 
 const app = express();
 
+// connect to db
+connectToDB();
+
 app.get("/", (req, res) => res.json({ msg: "welcome" }));
+
+// Define Rooutes
+app.use("/api/users", require("./routes/users"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/contacts", require("./routes/contacts"));
 
 const PORT = process.env.PORT || 5000;
 
