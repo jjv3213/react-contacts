@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
+const auth = require("../middlewares/auth");
+
 const User = require("../models/User");
 
 const schema = Joi.object().keys({
@@ -18,8 +20,14 @@ const schema = Joi.object().keys({
 // @route   GET api/auth
 // @desc    get logged in user
 // @access   private
-router.get("/", (req, res) => {
-  res.send("get a logged in user");
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("server error");
+  }
 });
 
 // @route   POST api/auth
