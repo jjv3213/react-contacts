@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
   }
   // if there is a token
   try {
-    // vaerify token and get the payload
+    // verify token and get the payload
     const decoded = jwt.verify(token, config.get("jwtSecret"));
     // set the user we get from the payload to req.user, so we can access it from the route
     req.user = decoded.user;
