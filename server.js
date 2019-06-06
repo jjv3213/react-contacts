@@ -6,6 +6,9 @@ const app = express();
 // connect to db
 connectToDB();
 
+// middleware
+app.use(express.json());
+
 app.get("/", (req, res) => res.json({ msg: "welcome" }));
 
 // Define Rooutes
